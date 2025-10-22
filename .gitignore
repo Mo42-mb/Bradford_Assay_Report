@@ -1,0 +1,8 @@
+# Ignore macOS hidden files
+.DS_Store
+
+# Ignore R history files
+.Rhistory
+
+#Ignore file with working directory
+wd.txt
