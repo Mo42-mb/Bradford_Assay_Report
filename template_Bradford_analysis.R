@@ -6,7 +6,9 @@ library(dplyr)
 ###### Load palettes and data ######
 # UPDATE working directory and data files. Knit/run the rest.
 setwd("/Users")
-dat <- read_excel("example/example_samples_Bradford.xlsx", sheet = "standards")
+dat_full <- read_excel("example/example_samples_Bradford.xlsx", sheet = "standards")
+dat <- dat_full %>%
+  select(protein_concentration_mg_per_mL, absorbance_corrected)
 samples_full <- read_excel("example/example_samples_Bradford.xlsx", sheet = "samples")
 # Make concise & exclude multiplication information until the end
 samples <- samples_full %>%
@@ -110,7 +112,9 @@ summary <- cbind(samples_full, df_predicted_l[,3], df_predicted_q[,3])
 summary$linear_prediction <- summary$multiplication_factor*summary$`df_predicted_l[, 3]`
 summary$quadratic_prediction <- summary$multiplication_factor*summary$`df_predicted_q[, 3]`
 
-table_summary <- summary[,c(1,8,9)]
+table_summary <- summary %>% 
+  select(sample, linear_prediction, quadratic_prediction)
+
 table_summary[,2] <- round(table_summary[,2], digits = 2)
 table_summary[,3] <- round(table_summary[,3], digits = 2)
 
